@@ -5,11 +5,11 @@ services:
     build: ./python
     image: camptocamp/python_app:latest
     ports:
-      - 5555:80
+      - XXXX:XX
   website:
     build: ./website
     image: camptocamp/php_app:latest
     ports:
-      - 5556:80
+      - XXXXX:XX
     depends_on:
-      - product-service
+      - XXXXXXXXXXXXXXXXX
