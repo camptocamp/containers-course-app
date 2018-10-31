@@ -1,15 +1,17 @@
-version: '2'
+version: '3'
 
 services:
   producer:
     build: ./producer
     image: camptocamp/course_docker_producer:latest
-    volumes:
-      - QUOI:VERS?
     ports:
-      - XXXX:XX
+      - 8081:80
+    volumes:
+      - ./producer/:/usr/src/app/
   consumer:
     build: ./consumer
     image: camptocamp/course_docker_consumer:latest
+    ports:
+      - 8080:80
     volumes:
-      - .QUOI:VERS?
+      - ./consumer:/var/www/html
