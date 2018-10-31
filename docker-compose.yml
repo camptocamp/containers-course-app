@@ -2,12 +2,12 @@ version: '3'
 
 services:
   producer:
-    build: ./producer
-    image: camptocamp/course_docker_producer:latest
+    build:
+    image:
     ports:
-      - 8081:80
+      -
   consumer:
-    build: ./consumer
-    image: camptocamp/course_docker_consumer:latest
+    build:
+    image:
     ports:
-      - 8080:80
+      -
