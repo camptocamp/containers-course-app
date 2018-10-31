@@ -1,15 +1,15 @@
 version: '2'
 
 services:
-  product-service:
-    build: ./python
-    image: camptocamp/python_app:latest
+  producer:
+    build: ./producer
+    image: camptocamp/course_docker_producer:latest
+    volumes:
+      - QUOI:VERS?
     ports:
       - XXXX:XX
-  website:
-    build: ./website
-    image: camptocamp/php_app:latest
-    ports:
-      - XXXXX:XX
-    depends_on:
-      - XXXXXXXXXXXXXXXXX
+  consumer:
+    build: ./consumer
+    image: camptocamp/course_docker_consumer:latest
+    volumes:
+      - .QUOI:VERS?
