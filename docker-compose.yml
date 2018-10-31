@@ -6,12 +6,8 @@ services:
     image: camptocamp/course_docker_producer:latest
     ports:
       - 8081:80
-    volumes:
-      - ./producer/:/usr/src/app/
   consumer:
     build: ./consumer
     image: camptocamp/course_docker_consumer:latest
     ports:
       - 8080:80
-    volumes:
-      - ./consumer:/var/www/html
