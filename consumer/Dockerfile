@@ -17,7 +17,7 @@ RUN sed -ri \
 RUN sed -i 's/80/8080/' /etc/apache2/ports.conf
 RUN sed -i 's/display_errors = Off/display_errors = On/' /etc/php/7.0/apache2/php.ini
 
-EXPOSE 80
+EXPOSE 8080
 
 COPY index.php /var/www/html/
 RUN rm -f /var/www/html/index.html
