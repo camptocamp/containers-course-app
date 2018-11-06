@@ -13,8 +13,7 @@
               $producer = 'producer';
 
             // Request products from producer
-            $response = json_decode(file_get_contents("http://$producer/"));
-
+            $response = json_decode(file_get_contents("http://$producer:8080/"));
             // Display results
             foreach ($response->products as $product)
                 echo "<li>$product</li>\n";

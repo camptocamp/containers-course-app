@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  producer:
+    build: ./producer
+    image: camptocamp/course_docker_producer:latest
+    ports:
+      - 8081:8080
+    volumes:
+      - ./producer/:/usr/src/app/
+  consumer:
+    build: ./consumer
+    image: camptocamp/course_docker_consumer:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - ./consumer:/var/www/html
