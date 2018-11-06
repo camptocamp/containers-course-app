@@ -1,19 +1,11 @@
 from flask import Flask
-from flask_restful import Resource, Api
-
 
 app = Flask(__name__)
-api = Api(app)
 
-class Product(Resource):
-    def get(self):
-      return {
-          'products': ['geomapfish', 'georchestra', 'geonetwork']
-      }
-
-
-api.add_resource(Product, '/')
-
+@app.route("/")
+def data():
+  with open("/etc/producer/data.json","r") as file:
+    return file.read()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80, debug=True)
+  app.run(host='0.0.0.0', port=8080, debug=True)
