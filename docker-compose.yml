@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  backend:
+    build: ./backend
+    image: camptocamp/course_docker_backend:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - ./backend/:/usr/src/app/
+      - ./backend/data.json:/etc/backend/data.json
+  frontend:
+    build: ./frontend
+    image: camptocamp/course_docker_frontend:latest
+    ports:
+      - 8081:8080
+    volumes:
+      - ./frontend:/var/www/html
