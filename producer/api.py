@@ -4,12 +4,11 @@ import json
 
 app = Flask(__name__)
 data_path = "/etc/producer/data.json"
-data_path = "/home/jacroute/git/course/docker/producer/data.json"
 
 products_view = {}
 products_buy = {}
 
-@app.route('/products/<product>')
+@app.route('/product/<product>')
 def view_product(product):
     try:
         p = load_product(product)
