@@ -8,6 +8,7 @@ data_path = "/etc/backend/data.json"
 products_view = {}
 products_buy = {}
 
+# Example of metrics:
 # traefik_entrypoint_requests_total{code="499",entrypoint="https",method="GET",protocol="http"} 13227
 @app.route('/metrics')
 def metrics():
