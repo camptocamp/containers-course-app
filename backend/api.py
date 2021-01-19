@@ -3,7 +3,7 @@ import json
 
 
 app = Flask(__name__)
-data_path = "/etc/producer/data.json"
+data_path = "/etc/backend/data.json"
 
 products_view = {}
 products_buy = {}
