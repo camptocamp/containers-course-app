@@ -8,6 +8,16 @@ data_path = "/etc/backend/data.json"
 products_view = {}
 products_buy = {}
 
+# traefik_entrypoint_requests_total{code="499",entrypoint="https",method="GET",protocol="http"} 13227
+@app.route('/metrics')
+def metrics():
+    res = ""
+    for product in products_view:
+        res = res + "product_view{product=\"%s\"} %s\n" % (product, products_view[product])
+    for product in products_buy:
+        res = res + "product_buy{product=\"%s\"} %s\n" % (product, products_buy[product])
+    return res
+
 @app.route('/product/<product>')
 def view_product(product):
     try:
