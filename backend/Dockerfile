@@ -2,10 +2,12 @@ FROM python:3-slim AS builder
 COPY api.py /usr/src/app/
 COPY requirements.txt /usr/src/app/
 WORKDIR /usr/src/app/
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 RUN apt-get update && \
     apt-get -y install binutils && \
-    pip install pyinstaller
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    pip install --no-cache-dir pyinstaller
 RUN pyinstaller --onefile api.py
 EXPOSE 8080
 ENTRYPOINT ["python"]
