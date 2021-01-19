@@ -32,3 +32,25 @@ services:
       #BACKEND_HOST: java-backend
     volumes:
       - ./frontend:/var/www/html
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus:/prometheus
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:6.7.3
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+      - ./dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml
+      - ./dashboard.json:/var/lib/grafana/dashboards/dashboard.json
+    ports:
+      - "3000:3000"
+
+volumes:
+    prometheus:
+    grafana-data:
