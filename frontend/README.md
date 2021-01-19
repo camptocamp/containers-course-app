@@ -1,4 +1,4 @@
-# PHP consumer
+# PHP frontend
 
 # Requirements
 
@@ -9,5 +9,5 @@
 
 The consumer can be configured with the following env vars:
 
-* `PRODUCER_HOST`: Hostname of producer service (Default: producer)
-* `PRODUCER_PORT`: Port of the producer service (Default: 8080)
+* `BACKEND_HOST`: Hostname of backend service (Default: backend)
+* `BACKEND_PORT`: Port of the backend service (Default: 8080)

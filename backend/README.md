@@ -1,10 +1,10 @@
-# Python producer
+# Python backend
 
 # Requirements
 
 * Python 3
 * Install python modules with `pip install -r requirements.txt`
-* Json formated list of products located in `/etc/producer/data.json`
+* Json formated list of products located in `/etc/backend/data.json`
 
 # Usage
 
