@@ -1,9 +1,9 @@
 <?php
-// Set producer URL
-$producer = getenv('PRODUCER_HOST');
-if(!$producer)
-  $producer = 'producer';
-$producer_port = getenv('PRODUCER_PORT');
-if(!$producer_port)
-  $producer_port = '8080';
+// Set backend URL
+$backend = getenv('BACKEND_HOST');
+if(!$backend)
+  $backend = 'backend';
+$backend_port = getenv('BACKEND_PORT');
+if(!$backend_port)
+  $backend_port = '8080';
 ?>

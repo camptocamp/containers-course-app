@@ -9,8 +9,8 @@
         <ul>
             <?php
 
-            // Request products from producer
-            $response = json_decode(file_get_contents("http://$producer:$producer_port/"));
+            // Request products from backend
+            $response = json_decode(file_get_contents("http://$backend:$backend_port/"));
             // Display results
             foreach ($response->products as $product)
                 echo "<li><a href='/product.php?product=$product->name'>$product->name</a></li>\n";

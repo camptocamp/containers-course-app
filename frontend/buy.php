@@ -5,7 +5,7 @@
     </head>
 
     <!-- Call backend /buy/<product>  -->
-    <?php file_get_contents("http://$producer:$producer_port/buy/$_REQUEST[product]"); ?>
+    <?php file_get_contents("http://$backend:$backend_port/buy/$_REQUEST[product]"); ?>
 
     <body>
         <h1>Congratulation</h1>

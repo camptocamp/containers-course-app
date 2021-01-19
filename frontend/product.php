@@ -7,7 +7,7 @@
 <?php
 # Call backend /product/<product> to show details
 $product_id = $_REQUEST['product'];
-$product = json_decode(file_get_contents("http://$producer:$producer_port/product/$product_id"));
+$product = json_decode(file_get_contents("http://$backend:$backend_port/product/$product_id"));
 ?>
 
     <body>
