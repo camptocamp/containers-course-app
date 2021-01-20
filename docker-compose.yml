@@ -1,18 +1,26 @@
 version: '3'
 
 services:
-  backend:
-    build: ./backend
-    image: camptocamp/course_docker_backend:latest
-    ports:
-      - 8080:8080
+  python_backend:
+    build: ./backend/python
+    image: camptocamp/course_docker_backend:python
     volumes:
       - ./backend/:/usr/src/app/
       - ./backend/data.json:/etc/backend/data.json
+
+  go_backend:
+    build: ./backend/go
+    image: camptocamp/course_docker_backend:go
+    volumes:
+      - ./backend/data.json:/etc/backend/data.json
+
   frontend:
     build: ./frontend
     image: camptocamp/course_docker_frontend:latest
     ports:
-      - 8081:8080
+      - 8080:8080
+    environment:
+      #BACKEND_HOST: python_backend
+      BACKEND_HOST: go_backend
     volumes:
       - ./frontend:/var/www/html
