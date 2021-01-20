@@ -10,8 +10,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-//var dataPath = "/etc/backend/data.json"
-var dataPath = "/home/raphink/src/github.com/camptocamp/containers-course-app/backend/data.json"
+var dataPath = "/etc/backend/data.json"
 
 type products struct {
 	Products []*product `json:"products"`
