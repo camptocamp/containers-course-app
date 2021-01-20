@@ -4,6 +4,7 @@ COPY . .
 RUN CGO_ENABLED=1 GOOS=linux go build -trimpath \
   -ldflags "-linkmode external -extldflags -static" \
   -o backend main.go
+RUN strip backend
 
 FROM scratch
 WORKDIR /
