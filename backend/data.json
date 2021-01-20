@@ -1,0 +1,7 @@
+{ "products":
+  [
+    {"name": "geomapfish", "description": "GeoMapFish allows to build rich and extensible WebGIS in an easy and flexible way. It has been developped to fulfill the needs of various actors in the geospatial environment, might it be public, private or academic actors."},
+    {"name": "georchestra", "description": "geOrchestra is a free, modular and interoperable Spatial Data Infrastructure software born in 2009 to meet the requirements of the INSPIRE directive in Europe."},
+    {"name": "geonetwork", "description": "GeoNetwork is a catalog application to manage spatially referenced resources. It provides powerful metadata editing and search functions as well as an interactive web map viewer. It is currently used in numerous Spatial Data Infrastructure initiatives across the world."}
+  ]
+}
