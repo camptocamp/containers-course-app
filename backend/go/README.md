@@ -7,6 +7,7 @@
 
 # Usage
 
+Install dependencies: `go get ./...`.
 Run `go run main.go`.
 
 List of products should be available at [http://localhost:8080/](http://localhost:8080/).
