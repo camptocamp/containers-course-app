@@ -13,6 +13,7 @@ import (
 
 type config struct {
 	Config string `short:"c" long:"config" env:"CONFIG" default:"/etc/backend/data.json"`
+	Port   int    `short:"p" long:"port" env:"PORT" default:"8080"`
 }
 
 type products struct {
@@ -135,6 +136,6 @@ func main() {
 	router.HandleFunc("/product/{id}", apiHandler(getProduct, prods))
 	router.HandleFunc("/buy/{id}", apiHandler(buyProduct, prods))
 
-	log.Infof("Starting app on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.Infof("Starting app on port %v", conf.Port)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", conf.Port), router))
 }
