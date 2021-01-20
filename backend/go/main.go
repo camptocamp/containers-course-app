@@ -7,10 +7,13 @@ import (
 	"net/http"
 
 	mux "github.com/gorilla/mux"
+	"github.com/jessevdk/go-flags"
 	log "github.com/sirupsen/logrus"
 )
 
-var dataPath = "/etc/backend/data.json"
+type config struct {
+	Config string `short:"c" long:"config" env:"CONFIG" default:"/etc/backend/data.json"`
+}
 
 type products struct {
 	Products []*product `json:"products"`
@@ -24,7 +27,7 @@ type product struct {
 	Buy  int `json:"buy"`
 }
 
-func loadProducts() (*products, error) {
+func loadProducts(dataPath string) (*products, error) {
 	byteProds, err := ioutil.ReadFile(dataPath)
 	if err != nil {
 		return nil, err
@@ -49,13 +52,7 @@ func (prods *products) loadProduct(id string) (*product, error) {
 }
 
 func listProducts(w http.ResponseWriter, r *http.Request, p *products) {
-	prods, err := loadProducts()
-	if err != nil {
-		http.Error(w, fmt.Sprintf("failed to read product list: %v", err), http.StatusServiceUnavailable)
-		return
-	}
-
-	json, err := json.Marshal(prods)
+	json, err := json.Marshal(p)
 	if err != nil {
 		http.Error(w, "failed to marshal json", http.StatusServiceUnavailable)
 		return
@@ -112,10 +109,24 @@ func apiHandler(apiF func(w http.ResponseWriter, r *http.Request, p *products), 
 
 }
 
+func loadConfig() (*config, error) {
+	var c config
+	parser := flags.NewParser(&c, flags.Default)
+	if _, err := parser.Parse(); err != nil {
+		return nil, err
+	}
+	return &c, nil
+}
+
 func main() {
+	conf, err := loadConfig()
+	if err != nil {
+		log.Fatalf("failed to load configuration: %v", err)
+	}
+
 	router := mux.NewRouter().StrictSlash(true)
 
-	prods, err := loadProducts()
+	prods, err := loadProducts(conf.Config)
 	if err != nil {
 		log.Fatalf("failed to read products: %v", err)
 	}
