@@ -105,6 +105,7 @@ func buyProduct(w http.ResponseWriter, r *http.Request, p *products) {
 
 func apiHandler(apiF func(w http.ResponseWriter, r *http.Request, p *products), p *products) func(http.ResponseWriter, *http.Request) {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("X-Backend-Lang", "go")
 		apiF(w, r, p)
 	})
 
