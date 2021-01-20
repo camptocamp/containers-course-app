@@ -25,5 +25,8 @@ $product = json_decode(file_get_contents("http://$backend:$backend_port/product/
       </form>
 
       <a href="/">Go back to products list<a>
+
+
+     <p>Served by the <?= backend_lang($http_response_header) ?> backend</p>
     </body>
 </html>

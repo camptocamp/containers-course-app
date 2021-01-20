@@ -16,5 +16,7 @@
                 echo "<li><a href='/product.php?product=$product->name'>$product->name</a></li>\n";
             ?>
         </ul>
+
+        <p>Served by the <?= backend_lang($http_response_header) ?> backend</p>
     </body>
 </html>

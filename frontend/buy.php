@@ -5,12 +5,16 @@
     </head>
 
     <!-- Call backend /buy/<product>  -->
-    <?php file_get_contents("http://$backend:$backend_port/buy/$_REQUEST[product]"); ?>
+<?php
+file_get_contents("http://$backend:$backend_port/buy/$_REQUEST[product]");
+?>
 
     <body>
         <h1>Congratulation</h1>
         <p>You just buy an opensource product : <?= $_REQUEST['product'] ?></p>
         <a href="/product.php?product=<?= $_REQUEST['product'] ?>">Go back to <?= $_REQUEST['product'] ?> page<a><br>
         <a href="/">Go back to products list<a>
+
+        <p>Served by the <?= backend_lang($http_response_header) ?> backend</p>
     </body>
 </html>
