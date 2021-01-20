@@ -2,6 +2,16 @@
 
 TODO describe
 
+# Run the application
+
+You can easily run the application using maven or gradle. It will start a Tomcat server listening on localhost:8080
+
+## With Maven
+./mvnw spring-boot:run
+
+## With Gradle
+./gradlew bootRun
+
 # How-to build the application
 
 ## With Maven
