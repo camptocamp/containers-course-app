@@ -1,0 +1,17 @@
+
+{
+    "version": "0.2.0",
+    "configurations": [
+          {
+                "name": "Delve into Docker",
+                "type": "go",
+                "request": "launch",
+                "mode": "remote",
+                "remotePath": "${workspaceRoot}",
+                "port": 40000,
+                "host": "127.0.0.1",
+                "program": "${workspaceRoot}",
+                "showLog": true
+          }
+    ]
+}

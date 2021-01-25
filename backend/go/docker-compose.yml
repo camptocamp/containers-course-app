@@ -1,0 +1,22 @@
+# Launch with:
+#   GO_PROJECT_DIR=$PWD docker-compose up
+
+version: '3'
+services:
+  backend:
+    container_name: "backend"
+    build:
+      context: .
+      dockerfile: Dockerfile.debug
+      args:
+        GO_PROJECT_DIR: ${GO_PROJECT_DIR}
+    volumes:
+      - .:${GO_PROJECT_DIR}
+    ports:
+      - "8080:8080"
+      - "40000:40000"
+    command:
+      - "-c"
+      - "data.json"
+    security_opt:
+      - "seccomp:unconfined"

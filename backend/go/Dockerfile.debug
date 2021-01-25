@@ -1,0 +1,12 @@
+FROM golang:1.15
+
+ARG GO_PROJECT_DIR
+
+WORKDIR $GO_PROJECT_DIR
+EXPOSE 40000 8080
+
+RUN go get github.com/derekparker/delve/cmd/dlv
+ADD . .
+
+ENTRYPOINT [ "dlv", "debug", ".", "--listen=:40000", "--headless=true", "--api-version=2", "--log", "--" ]
+CMD []
