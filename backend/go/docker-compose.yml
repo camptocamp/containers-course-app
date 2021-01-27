@@ -1,17 +1,13 @@
-# Launch with:
-#   GO_PROJECT_DIR=$PWD docker-compose up
-
 version: '3'
 services:
   backend:
-    container_name: "backend"
+    image: raphink/containers-course-app:go_debug
     build:
       context: .
       dockerfile: Dockerfile.debug
-      args:
-        GO_PROJECT_DIR: ${GO_PROJECT_DIR}
     volumes:
-      - .:${GO_PROJECT_DIR}
+      - .:/src
+    user: '1000'
     ports:
       - "8080:8080"
       - "40000:40000"
