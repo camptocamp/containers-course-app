@@ -14,6 +14,10 @@ services:
     volumes:
       - ./backend/data.json:/etc/backend/data.json
 
+  java_backend:
+    build: ./backend/java
+    image: camptocamp/course_docker_backend:java
+
   frontend:
     build: ./frontend
     image: camptocamp/course_docker_frontend:latest
@@ -22,5 +26,6 @@ services:
     environment:
       #BACKEND_HOST: python_backend
       BACKEND_HOST: go_backend
+      BACKEND_HOST: java_backend
     volumes:
       - ./frontend:/var/www/html
