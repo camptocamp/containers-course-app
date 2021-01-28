@@ -1,6 +1,7 @@
 FROM golang:1.15
 
 WORKDIR /src
+
 EXPOSE 40000 8080
 
 RUN go get github.com/derekparker/delve/cmd/dlv
@@ -8,6 +9,8 @@ RUN go get github.com/derekparker/delve/cmd/dlv
 RUN mkdir /.cache \
     && chown -R 1000.0 /.cache
 USER 1000
+
+ADD . .
 
 ENTRYPOINT [ "dlv", "debug", ".", "--listen=:40000", "--headless=true", "--api-version=2", "--log", "--" ]
 CMD []
