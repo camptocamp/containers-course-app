@@ -44,7 +44,6 @@ public class ProductsController {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     private static final String DATA_FILENAME = "data.json";
-    private static final String CONFIGURATION_DIR = "/etc/backend/";
 
     private static final Map<String,Product> products =  new HashMap<String,Product>();
 
@@ -98,12 +97,7 @@ public class ProductsController {
         Resource resource = null;
         resource = resourceLoader.getResource("classpath:" + DATA_FILENAME); // Useful to load test resources
         if (!resource.exists()) {
-            LOGGER.info(DATA_FILENAME + " not found in the classpath");
-            resource = resourceLoader.getResource(CONFIGURATION_DIR + DATA_FILENAME);
-            LOGGER.info("try to load " + resource.getURI() );
-            if (!resource.exists()) {
-                LOGGER.error(DATA_FILENAME + " not found!");
-            }
+            LOGGER.error(DATA_FILENAME + " not found in the classpath");
         }
         
         // Resource resource = resourceLoader.getResource("classpath:" + DATA_FILENAME);
