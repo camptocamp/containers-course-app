@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.json.simple.JSONObject;
@@ -33,14 +34,19 @@ import org.slf4j.LoggerFactory;
    
 //  * '/buy/<product>': buy a product, call to this page increment buy stats
 //      * return 200 with html
+
+// {"name": "geomapfish", "description": "GeoMapFish allows to build rich and extensible WebGIS in an easy and flexible way. 
+// It has been developped to fulfill the needs of various actors in the geospatial environment, might it be public, private or academic actors.",
+// "view": 1, "buy": 0}
 @RestController
 public class ProductsController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
-    private static final String dataFileName = "data.json";
-    private static final Map<String,Integer> views = new HashMap<String,Integer>(); //number of views
-    private static final Map<String,Integer> buys = new HashMap<String,Integer>(); //number of buys
+    private static final String DATA_FILENAME = "data.json";
+    private static final String CONFIGURATION_DIR = "/etc/backend/";
+
+    private static final Map<String,Product> products =  new HashMap<String,Product>();
 
     @Autowired
     ResourceLoader resourceLoader;
@@ -51,51 +57,56 @@ public class ProductsController {
         return this.readProductList().toJSONString();
     }
 
-    @GetMapping("/products/{product}")
+    @GetMapping("/product/{product}")
     // * '/product/<product>': describe one product and display stats (view and buy). call to this page increment view stats
     // * return json with addtional fileds: view and buy
-    public ResponseEntity<String> getProduct(@PathVariable("product") String product)
+    public ResponseEntity<String> getProduct(@PathVariable("product") String productName)
             throws IOException, ParseException {
         readProductList(); //read or re-read product list to make sure stats are initialized
      
-        if (!views.containsKey(product)) {
-            LOGGER.error(product + " not found !");
+        if (!products.containsKey(productName)) {
+            LOGGER.error(productName + " not found !");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        int productViews = views.get(product);
-        views.put(product, productViews+1);
+        products.get(productName).addView();
     
-        return ResponseEntity.ok(formatResponse(product));
+        return ResponseEntity.ok(formatResponse(productName));
     }
 
 
     @GetMapping("/buy/{product}")
     //  * '/buy/<product>': buy a product, call to this page increment buy stats
     //  * return 200 with html
-    public ResponseEntity<String> buyProduct(@PathVariable("product") String product)
+    public ResponseEntity<String> buyProduct(@PathVariable("product") String productName)
             throws IOException, ParseException {
         readProductList(); //read or re-read product list to make sure stats are initialized
      
-        if (!buys.containsKey(product)) {
-            LOGGER.error(product + " not found !");
+        if (!products.containsKey(productName)) {
+            LOGGER.error(productName + " not found !");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        int productBought = buys.get(product);
-        buys.put(product, productBought+1);
-    
-        return ResponseEntity.ok(formatResponse(product));
+        products.get(productName).addBuy();
+
+        return ResponseEntity.ok(formatResponse(productName));
     }
 
-    private String formatResponse(String product) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(product)
-            .append(" viewed : ").append(Integer.toString(views.get(product)))
-            .append(" bought : ").append(Integer.toString(buys.get(product)));
-        return sb.toString();
+    private String formatResponse(String productName) {
+        return products.get(productName).toString();
     }
 
     private JSONObject readProductList() throws IOException, ParseException {
-        Resource resource = resourceLoader.getResource("classpath:" + dataFileName);
+        Resource resource = null;
+        resource = resourceLoader.getResource("classpath:" + DATA_FILENAME); // Useful to load test resources
+        if (!resource.exists()) {
+            LOGGER.info(DATA_FILENAME + " not found in the classpath");
+            resource = resourceLoader.getResource(CONFIGURATION_DIR + DATA_FILENAME);
+            LOGGER.info("try to load " + resource.getURI() );
+            if (!resource.exists()) {
+                LOGGER.error(DATA_FILENAME + " not found!");
+            }
+        }
+        
+        // Resource resource = resourceLoader.getResource("classpath:" + DATA_FILENAME);
         return readDataJson(resource);
     }
 
@@ -123,29 +134,16 @@ public class ProductsController {
 
     private void parseProductList(JSONObject productList) 
     {
-        //Get product object within list
         JSONArray productArray = (JSONArray) productList.get("products");
-
-        //Iterate over employee array
         productArray.forEach( productObject -> parseProduct( (JSONObject) productObject ) );
     }
 
     private void parseProduct(JSONObject productObject) {
-        String name = (String) productObject.get("name");    
-        // String desc = (String) productObject.get("description");
-        // Product product = new Product(name,desc);
-        initStats(name);
-    }
-    
-    private void initStats(String name) {
-        if (!views.containsKey(name)) {
-            LOGGER.info("Initialize viewing stats for " + name);
-            views.put(name, 0);
-        }
-        if (!buys.containsKey(name)) {
-            LOGGER.info("Initialize buying stats for " + name);
-            buys.put(name, 0);
+        String name = (String) productObject.get("name");
+        if (!products.containsKey(name)) {
+            String description = (String) productObject.get("description");
+            Product product = new Product(name, description);
+            products.put(name, product);
         }
     }
-
 }

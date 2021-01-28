@@ -2,6 +2,7 @@ package com.camptocamp.containerscourseapp;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.stringContainsInOrder;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,28 +31,28 @@ public class ProductsControllerTest {
 
 	@Test
 	public void getProductGeomapfish() throws Exception {
-		mvc.perform(MockMvcRequestBuilders.get("/products/geomapfish").accept(MediaType.APPLICATION_JSON))
+		mvc.perform(MockMvcRequestBuilders.get("/product/geomapfish").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().string(equalTo("geomapfish viewed : 1 bought : 0")));
-		mvc.perform(MockMvcRequestBuilders.get("/products/geomapfish").accept(MediaType.APPLICATION_JSON))
+				.andExpect(content().string(stringContainsInOrder("view", "1", "buy", "0")));
+		mvc.perform(MockMvcRequestBuilders.get("/product/geomapfish").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().string(equalTo("geomapfish viewed : 2 bought : 0")));
-		mvc.perform(MockMvcRequestBuilders.get("/products/geomapfish").accept(MediaType.APPLICATION_JSON))
+				.andExpect(content().string(stringContainsInOrder("view", "2", "buy", "0")));
+		mvc.perform(MockMvcRequestBuilders.get("/product/geomapfish").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().string(equalTo("geomapfish viewed : 3 bought : 0")));
+				.andExpect(content().string(stringContainsInOrder("view", "3", "buy", "0")));
 	}
-
 
 	@Test
 	public void buyProductGeorchestra() throws Exception {
 		mvc.perform(MockMvcRequestBuilders.get("/buy/georchestra").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().string(equalTo("georchestra viewed : 0 bought : 1")));
+				.andExpect(content().string(stringContainsInOrder("view", "0", "buy", "1")));
 		mvc.perform(MockMvcRequestBuilders.get("/buy/georchestra").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().string(equalTo("georchestra viewed : 0 bought : 2")));
+				.andExpect(content().string(stringContainsInOrder("view", "0", "buy", "2")));
 		mvc.perform(MockMvcRequestBuilders.get("/buy/georchestra").accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
-				.andExpect(content().string(equalTo("georchestra viewed : 0 bought : 3")));
+				.andExpect(content().string(stringContainsInOrder("view", "0", "buy", "3")));
 	}
+
 }
