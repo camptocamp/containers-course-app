@@ -17,6 +17,8 @@ services:
   java_backend:
     build: ./backend/java
     image: camptocamp/course_docker_backend:java
+    volumes:
+      - ./backend/data.json:/var/lib/jetty/webapps/ROOT/WEB-INF/classes/data.json
 
   frontend:
     build: ./frontend
