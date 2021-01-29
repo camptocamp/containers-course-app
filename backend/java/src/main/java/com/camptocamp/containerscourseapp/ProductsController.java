@@ -99,9 +99,9 @@ public class ProductsController {
         if (!resource.exists()) {
             LOGGER.error(DATA_FILENAME + " not found in the classpath");
         }
+        LOGGER.debug("Reading products from " + resource.getURI());
         
-        // Resource resource = resourceLoader.getResource("classpath:" + DATA_FILENAME);
-        return readDataJson(resource);
+		return readDataJson(resource);
     }
 
     private JSONObject readDataJson(Resource resource) throws IOException, ParseException {
@@ -135,9 +135,12 @@ public class ProductsController {
     private void parseProduct(JSONObject productObject) {
         String name = (String) productObject.get("name");
         if (!products.containsKey(name)) {
+            LOGGER.debug("Parsing product named '" + name + "'");
             String description = (String) productObject.get("description");
             Product product = new Product(name, description);
             products.put(name, product);
+        } else {
+            LOGGER.debug("Product named '" + name + "' already parsed... skipping");
         }
     }
 }

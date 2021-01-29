@@ -1,0 +1,6 @@
+{ "products":
+  [
+    {"name": "default product", "description": "default description."},
+    {"name": "make sure", "description": "to include your data.json the right way"}
+  ]
+}
