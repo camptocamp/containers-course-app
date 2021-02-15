@@ -19,6 +19,7 @@ services:
     image: camptocamp/course_docker_backend:java
     volumes:
       - ./backend/data.json:/var/lib/jetty/webapps/ROOT/WEB-INF/classes/data.json
+      - ./backend/java/logback.xml:/var/lib/jetty/webapps/ROOT/WEB-INF/classes/logback.xml
 
   frontend:
     build: ./frontend
