@@ -27,7 +27,9 @@ jobs:
       run: |
         docker tag camptocamp/course_docker_backend:python ghcr.io/camptocamp/course_docker_backend:python
         docker tag camptocamp/course_docker_backend:go ghcr.io/camptocamp/course_docker_backend:go
+        docker tag camptocamp/course_docker_backend:java ghcr.io/camptocamp/course_docker_backend:java
         docker tag camptocamp/course_docker_frontend:latest ghcr.io/camptocamp/course_docker_frontend:latest
         docker push ghcr.io/camptocamp/course_docker_backend:python
         docker push ghcr.io/camptocamp/course_docker_backend:go
+        docker push ghcr.io/camptocamp/course_docker_backend:java
         docker push ghcr.io/camptocamp/course_docker_frontend:latest
