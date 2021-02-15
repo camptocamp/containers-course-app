@@ -1,0 +1,33 @@
+---
+name: Build backend/frontend images
+
+on:
+  push:
+    branches:
+    - docker_compose
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: camptocamp/initialise-gopass-summon-action@v2
+      with:
+        ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
+        github-gopass-ci-token: ${{secrets.GOPASS_CI_GITHUB_TOKEN}}
+        patterns: docker
+
+    - name: "Create the customized docker images"
+      run: |
+        docker-compose build
+
+    - name: pushes the docker images
+      run: |
+        docker tag camptocamp/course_docker_backend:python ghcr.io/camptocamp/course_docker_backend:python
+        docker tag camptocamp/course_docker_backend:go ghcr.io/camptocamp/course_docker_backend:go
+        docker tag camptocamp/course_docker_frontend:latest ghcr.io/camptocamp/course_docker_frontend:latest
+        docker push ghcr.io/camptocamp/course_docker_backend:python
+        docker push ghcr.io/camptocamp/course_docker_backend:go
+        docker push ghcr.io/camptocamp/course_docker_frontend:latest
