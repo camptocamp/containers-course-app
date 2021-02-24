@@ -1,2 +1,14 @@
-Creates a simple webapp with python's flask
-and php to render a simple hello page with data from the python app
+This is a simple web app demo with a backend and a frontend, in various languages.
+
+## Backend
+
+The backend is available as:
+
+- Python (Flask)
+- Go
+- Java
+
+
+## Frontend
+
+The frontend is a PHP application.
