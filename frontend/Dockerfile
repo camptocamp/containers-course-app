@@ -19,7 +19,7 @@ RUN sed -i 's/display_errors = Off/display_errors = On/' /etc/php/7.0/apache2/ph
 
 EXPOSE 8080
 
-COPY index.php /var/www/html/
+COPY *.php /var/www/html/
 RUN rm -f /var/www/html/index.html
 ADD entrypoint.sh /entrypoint.sh
 
