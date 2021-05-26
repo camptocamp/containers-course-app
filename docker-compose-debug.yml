@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  python_backend:
+    build:
+      context: ./backend/python
+      target: builder
+    image: camptocamp/course_docker_backend:python_debug
+    entrypoint: ["bash", "-c"]
+    command:
+      - |
+        pip install debugpy
+        python -m debugpy --listen 0.0.0.0:5678 api.py
+    volumes:
+      - ./backend/python:/usr/src/app/
+      - ./backend/data.json:/etc/backend/data.json
+    ports:
+      - 5678:5678
+      - 8081:8080
+
+  frontend:
+    environment:
+      BACKEND_HOST: python_backend
+      #BACKEND_HOST: go_backend
+      #BACKEND_HOST: java_backend
+    volumes:
+      - ./frontend:/var/www/html
