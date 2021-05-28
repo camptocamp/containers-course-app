@@ -7,20 +7,9 @@ RUN apt-get update && \
     apt-get -y install binutils curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
-    pip install --no-cache-dir pyinstaller
+    pip install --no-cache-dir pyinstaller && \
+    pip install --no-cache-dir debugpy
 RUN pyinstaller --onefile api.py
-HEALTHCHECK --interval=1s CMD curl -s -o /dev/null -w "%{http_code}" localhost:8080 | grep 200 || exit 1
-EXPOSE 8080
-ENTRYPOINT ["python"]
+EXPOSE 8080 5678
+ENTRYPOINT ["python", "-m", "debugpy", "--listen", "0.0.0.0:5678"]
 CMD ["api.py"]
-
-FROM debian
-RUN apt-get update && \
-    apt-get -y install curl && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-COPY --from=builder /usr/src/app/dist/api /usr/bin/api
-COPY data.json /etc/backend/data.json
-HEALTHCHECK --interval=1s CMD curl -s -o /dev/null -w "%{http_code}" localhost:8080 | grep 200 || exit 1
-EXPOSE 8080
-ENTRYPOINT ["/usr/bin/api"]
