@@ -21,6 +21,7 @@ services:
   frontend:
     environment:
       BACKEND_HOST: python_backend
+      #BACKEND_HOST: 172.17.0.1
       #BACKEND_HOST: go_backend
       #BACKEND_HOST: java_backend
     volumes:

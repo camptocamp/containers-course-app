@@ -1,4 +1,5 @@
-FROM golang:1.15 as builder
+ARG BASE_TAG=1.15
+FROM golang:${BASE_TAG} as builder
 WORKDIR /opt/build
 COPY . .
 RUN CGO_ENABLED=1 GOOS=linux go build -trimpath \

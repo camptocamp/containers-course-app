@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  python_backend_3:
+    build:
+      context: ./backend/python
+    image: camptocamp/course_docker_backend:python
+
+  python_backend_3_9_5:
+    build:
+      context: ./backend/python
+      args:
+        BASE_TAG: 3.9.5-buster
+    image: camptocamp/course_docker_backend:python_3.9.5-buster
+
+  python_backend_3_6:
+    build:
+      context: ./backend/python
+      args:
+        BASE_TAG: 3.6-stretch
+    image: camptocamp/course_docker_backend:python_3.6-stretch
+
+  go_backend_1_15:
+    build:
+      context: ./backend/go
+    image: camptocamp/course_docker_backend:go
+
+  go_backend_1_15_11:
+    build:
+      context: ./backend/go
+      args:
+        BASE_TAG: 1.15.11-buster
+    image: camptocamp/course_docker_backend:go-1.15.11-buster
