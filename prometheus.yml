@@ -3,7 +3,15 @@ global:
   scrape_timeout: 4s
   evaluation_interval: 1m
 scrape_configs:
-- job_name: backend
+- job_name: python_backend
   static_configs:
   - targets:
-    - backend:8080
+    - python_backend:8080
+- job_name: go_backend
+  static_configs:
+  - targets:
+    - go_backend:8080
+- job_name: java_backend
+  static_configs:
+  - targets:
+    - java_backend:8080
