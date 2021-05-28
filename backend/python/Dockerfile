@@ -1,4 +1,5 @@
-FROM python:3.8 AS builder
+ARG BASE_TAG=3.8
+FROM python:${BASE_TAG} AS builder
 COPY api.py requirements.txt /usr/src/app/
 COPY data.json /etc/backend/data.json
 WORKDIR /usr/src/app/
