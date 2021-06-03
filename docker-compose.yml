@@ -48,6 +48,7 @@ services:
       - ./datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
       - ./dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml
       - ./dashboard.json:/var/lib/grafana/dashboards/dashboard.json
+      - ./jvm-micrometer_rev9.json:/var/lib/grafana/dashboards/jvm-micrometer_rev9.json
     ports:
       - "3000:3000"
 
