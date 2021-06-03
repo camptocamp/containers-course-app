@@ -12,6 +12,7 @@ scrape_configs:
   - targets:
     - go_backend:8080
 - job_name: java_backend
+  metrics_path: /actuator/prometheus
   static_configs:
   - targets:
     - java_backend:8080

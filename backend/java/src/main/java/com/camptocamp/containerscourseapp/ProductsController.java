@@ -5,12 +5,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.micrometer.core.instrument.MeterRegistry;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.json.simple.JSONObject;
@@ -45,11 +46,13 @@ public class ProductsController {
 
     private static final String DATA_FILENAME = "data.json";
 
+    @Autowired
+    MeterRegistry meterRegistry;
+
     private static final Map<String,Product> products =  new HashMap<String,Product>();
 
     @Autowired
     ResourceLoader resourceLoader;
-
 
     @RequestMapping("/")
 	public String index() throws IOException, ParseException {
@@ -67,7 +70,7 @@ public class ProductsController {
             LOGGER.error(productName + " not found !");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        products.get(productName).addView();
+        products.get(productName).incrementView();
     
         return ResponseEntity.ok(formatResponse(productName));
     }
@@ -84,7 +87,7 @@ public class ProductsController {
             LOGGER.error(productName + " not found !");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        products.get(productName).addBuy();
+        products.get(productName).incrementBuy();
 
         return ResponseEntity.ok(formatResponse(productName));
     }
@@ -126,8 +129,7 @@ public class ProductsController {
         return productList;
     }
 
-    private void parseProductList(JSONObject productList) 
-    {
+    private void parseProductList(JSONObject productList) {
         JSONArray productArray = (JSONArray) productList.get("products");
         productArray.forEach( productObject -> parseProduct( (JSONObject) productObject ) );
     }
@@ -137,7 +139,7 @@ public class ProductsController {
         if (!products.containsKey(name)) {
             LOGGER.debug("Parsing product named '" + name + "'");
             String description = (String) productObject.get("description");
-            Product product = new Product(name, description);
+            Product product = new Product(name, description, this.meterRegistry);
             products.put(name, product);
         } else {
             LOGGER.debug("Product named '" + name + "' already parsed... skipping");

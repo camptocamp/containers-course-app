@@ -2,6 +2,9 @@ package com.camptocamp.containerscourseapp;
 
 import org.json.simple.JSONObject;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+
 public class Product {
 
     public final static String KEY_NAME = "name";
@@ -13,10 +16,20 @@ public class Product {
     private String description;
     private int view;
     private int buy;
+    private Counter viewCounter;
+    private Counter buyCounter;
 
-    public Product(String name, String description) {
+    public Product(String name, String description, MeterRegistry meterRegistry) {
         this.name = name;
         this.description = description;
+        this.viewCounter = Counter.builder("product_view")
+            .tags("product", name)
+            .description("The number of products view")
+            .register(meterRegistry);
+        this.buyCounter = Counter.builder("product_buy")
+            .tags("product", name)
+            .description("The number of products buy")
+            .register(meterRegistry);
         this.view = 0;
         this.buy = 0;
     }
@@ -37,27 +50,13 @@ public class Product {
         this.description = description;
     }
 
-    public int getView() {
-        return view;
-    }
-
-    public void setView(int view) {
-        this.view = view;
-    }
-
-    public void addView() {
+    public void incrementView() {
+        this.viewCounter.increment();
         this.view += 1;
     }
 
-    public int getBuy() {
-        return buy;
-    }
-
-    public void setBuy(int buy) {
-        this.buy = buy;
-    }
-
-    public void addBuy() {
+    public void incrementBuy() {
+        this.buyCounter.increment();
         this.buy += 1;
     }
 
