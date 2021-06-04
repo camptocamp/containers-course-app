@@ -17,6 +17,13 @@ services:
     ports:
       - 5678:5678
       - 8081:8080
+  java_backend:
+    ports:
+      - 8083:8080
+      - 8000:8000
+    environment:
+      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n
+
 
   frontend:
     environment:
