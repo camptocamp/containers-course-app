@@ -25,7 +25,6 @@ frontend:
   service:
     type: ClusterIP
     port: 80
-    targetPort: http
 
 imagePullSecrets: []
 nameOverride: ""
