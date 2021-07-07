@@ -4,7 +4,7 @@ name: Build backend/frontend images
 on:
   push:
     branches:
-    - docker_compose
+    - M03S04
 
 jobs:
   build:
