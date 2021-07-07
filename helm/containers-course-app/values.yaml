@@ -6,10 +6,12 @@ replicaCount: 1
 
 backend:
   image:
-    repository: raphink/containers-course-app
+    registry: ghcr.io
+    repository: camptocamp
+    name: course_docker_backend
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "backend_go"
+    tag: "python"
 
   service:
     type: ClusterIP
@@ -17,10 +19,12 @@ backend:
 
 frontend:
   image:
-    repository: raphink/containers-course-app
+    registry: ghcr.io
+    repository: camptocamp
+    name: course_docker_frontend
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "frontend"
+    tag: "latest"
 
   service:
     type: ClusterIP
