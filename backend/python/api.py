@@ -1,51 +1,48 @@
 from flask import Flask
 import json
 
+from prometheus_client import Counter, generate_latest
 
 app = Flask(__name__)
 data_path = "/etc/backend/data.json"
 
+products_view_metrics = Counter('view', 'Product view', ['product'])
+products_buy_metrics = Counter('buy', 'Product buy', ['product'])
 products_view = {}
 products_buy = {}
 
-# Example of metrics:
-# traefik_entrypoint_requests_total{code="499",entrypoint="https",method="GET",protocol="http"} 13227
 @app.route('/metrics')
 def metrics():
-    res = ""
-    for product in products_view:
-        res = res + "product_view{product=\"%s\"} %s\n" % (product, products_view[product])
-    for product in products_buy:
-        res = res + "product_buy{product=\"%s\"} %s\n" % (product, products_buy[product])
-    return res
+    return generate_latest()
 
-@app.route('/product/<product>')
-def view_product(product):
+@app.route('/product/<pid>')
+def view_product(pid):
     try:
-        p = load_product(product)
+        p = load_product(pid)
         # Update stats
-        if product not in products_view:
-            products_view[product] = 1
+        products_view_metrics.labels(product=pid).inc()
+        if pid not in products_view:
+            products_view[pid] = 1
         else:
-            products_view[product] = products_view[product] + 1
+            products_view[pid] = products_view[pid] + 1
         # Add stats
-        p['view'] = products_view[product] if product in products_view else 0
-        p['buy'] = products_buy[product] if product in products_buy else 0
+        p['view'] = products_view[pid]
+        p['buy'] = products_buy[pid] if pid in products_buy else 0
         headers = {'Content-Type': 'application/json'}
         return json.dumps(p), 200, headers
     except ValueError:
         return "No such product", 404
 
-
-@app.route('/buy/<product>')
-def buy_product(product):
+@app.route('/buy/<pid>')
+def buy_product(pid):
     try:
-        p = load_product(product)
+        load_product(pid)
         # Update stats
-        if product not in products_buy:
-            products_buy[product] = 1
+        products_buy_metrics.labels(product=pid).inc()
+        if pid not in products_buy:
+            products_buy[pid] = 1
         else:
-            products_buy[product] = products_buy[product] + 1
+            products_buy[pid] = products_buy[pid] + 1
         return 'Thanks for buying opensource software ;-)'
     except ValueError:
         return "No such product", 404
