@@ -30,6 +30,23 @@ frontend:
     type: ClusterIP
     port: 80
 
+metrics:
+  serviceMonitor:
+    enabled: true
+    # interval: 30s
+    # scrapeTimeout: 10s
+    additionalLabels: {}
+    metricsLabels: []
+    #  - name: customLabel1
+    #    value: value1
+    #  - name: customLabel2
+    #    value: value2
+
+  prometheusRule:
+    enabled: true
+    additionalLabels: {}
+    alertsLabels: {}
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -80,13 +97,6 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
 

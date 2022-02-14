@@ -1,14 +1,12 @@
 ingress:
   enabled: true
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    traefik.ingress.kubernetes.io/router.tls: "true"
   hosts:
-    - host: containers-course-app.jacroute.apps.campto.camp
+    - host: containers-course-app.127.0.0.1.nip.io
       paths:
         - /
-  tls:
-    - secretName: containers-course-app
-      hosts:
-        - containers-course-app.jacroute.apps.campto.camp
+  tls: []
+
+metrics:
+  serviceMonitor:
+    additionalLabels:
+      release: prom

@@ -6,9 +6,7 @@ metadata:
     app.kubernetes.io/component: "backend"
     {{- include "containers-course-app.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       app.kubernetes.io/component: "backend"
