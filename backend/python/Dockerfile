@@ -1,6 +1,6 @@
 FROM python:3.8 AS builder
-COPY api.py /usr/src/app/
-COPY requirements.txt /usr/src/app/
+COPY api.py requirements.txt /usr/src/app/
+COPY data.json /etc/backend/data.json
 WORKDIR /usr/src/app/
 RUN pip install --no-cache-dir -r requirements.txt
 RUN apt-get update && \
