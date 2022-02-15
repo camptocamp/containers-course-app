@@ -21,6 +21,5 @@ EXPOSE 8080
 
 COPY *.php /var/www/html/
 RUN rm -f /var/www/html/index.html
-ADD entrypoint.sh /entrypoint.sh
 
 CMD . /etc/apache2/envvars && exec apache2 -D FOREGROUND
