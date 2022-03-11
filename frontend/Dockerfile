@@ -12,14 +12,24 @@ RUN sed -ri \
     -e 's!^(\s*CustomLog)\s+\S+!\1 /proc/self/fd/1!g' \
     -e 's!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/2!g' \
     -e 's!^<VirtualHost \*:80>!<VirtualHost *:8080>!g' \
-    "/etc/apache2/sites-available/000-default.conf"
+    "/etc/apache2/sites-available/000-default.conf" && \
+    sed -ri \
+    -e 's!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/2!g' \
+    "/etc/apache2/apache2.conf"
 
 RUN sed -i 's/80/8080/' /etc/apache2/ports.conf
 RUN sed -i 's/display_errors = Off/display_errors = On/' /etc/php/7.0/apache2/php.ini
 
 EXPOSE 8080
 
+ENV APACHE_RUN_USER=www-data APACHE_RUN_GROUP=www-data
+ENV APACHE_PID_FILE=/dev/shm/apache2.pid
+ENV APACHE_RUN_DIR=/dev/shm/
+ENV APACHE_LOCK_DIR=/dev/shm/
+ENV APACHE_LOG_DIR=/dev/shm/
+ENV LANG=C
+
 COPY *.php /var/www/html/
 RUN rm -f /var/www/html/index.html
 
-CMD . /etc/apache2/envvars && exec apache2 -D FOREGROUND
+CMD exec apache2 -D FOREGROUND
