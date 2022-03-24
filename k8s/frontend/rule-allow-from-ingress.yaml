@@ -7,7 +7,7 @@ spec:
   - from:
     - namespaceSelector:
         matchLabels:
-          network.openshift.io/policy-group: ingress
+          openshift-ingress: yes
   podSelector: {}
   policyTypes:
   - Ingress
