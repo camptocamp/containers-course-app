@@ -17,7 +17,6 @@ List of products should be available at [http://localhost:8080/](http://localhos
 You can build a static binary with PyInstaller:
 
 ```
-apt-get install binutils
 pip install pyinstaller
 pyinstaller --onefile api.py
 ```
