@@ -5,7 +5,7 @@ services:
     build: ./backend/python
     image: camptocamp/course_docker_backend:python
     volumes:
-      - ./backend/:/usr/src/app/
+      - ./backend/python/:/usr/src/app/
       - ./backend/data.json:/etc/backend/data.json
 
   go_backend:
