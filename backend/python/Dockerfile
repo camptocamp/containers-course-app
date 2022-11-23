@@ -1,4 +1,4 @@
-FROM python:3-slim AS builder
+FROM python:3.8 AS builder
 COPY api.py /usr/src/app/
 COPY requirements.txt /usr/src/app/
 WORKDIR /usr/src/app/
