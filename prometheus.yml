@@ -3,15 +3,16 @@ global:
   scrape_timeout: 4s
   evaluation_interval: 1m
 scrape_configs:
-- job_name: python_backend
+- job_name: python-backend
   static_configs:
   - targets:
-    - python_backend:8080
-- job_name: go_backend
+    - python-backend:8080
+- job_name: go-backend
   static_configs:
   - targets:
-    - go_backend:8080
-- job_name: java_backend
+    - go-backend:8080
+- job_name: java-backend
+  metrics_path: /actuator/prometheus
   static_configs:
   - targets:
-    - java_backend:8080
+    - java-backend:8080
