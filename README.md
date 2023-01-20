@@ -11,4 +11,4 @@ The backend is available as:
 
 ## Frontend
 
-The frontend is a PHP application.
+The frontend is a PHP application served by apache on port `8080`. 
