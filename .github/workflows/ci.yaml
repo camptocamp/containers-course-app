@@ -1,0 +1,33 @@
+---
+name: Build images for trainings
+
+on:
+  # trigger only on push to dev branch
+  push:
+    branches:
+      - dev
+
+jobs:
+  build-and-push:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and push to ghcr
+        run: |
+          cd m03_developer/
+          docker build -t ghcr.io/camptocamp/courseware-containers-m03:monolith \
+            --pull --no-cache \
+            --label GIT_COMMIT=$(git rev-parse HEAD) .
+          docker push ghcr.io/camptocamp/courseware-containers-m03:monolith
+          docker build -t ghcr.io/camptocamp/courseware-containers-m03:static \
+            -f Dockerfile.static \
+            --pull --no-cache \
+            --label GIT_COMMIT=$(git rev-parse HEAD) .
+          docker push ghcr.io/camptocamp/courseware-containers-m03:monolith

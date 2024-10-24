@@ -1,0 +1,4 @@
+FROM nginx:1
+
+RUN mkdir /usr/share/nginx/html/static/
+COPY static/* /usr/share/nginx/html/static/
