@@ -21,7 +21,7 @@ jobs:
 
       - name: Build and push to ghcr
         run: |
-          cd m03_developer/
+          cd m03_developer/monolith/
           docker build -t ghcr.io/camptocamp/courseware-containers-m03:monolith \
             --pull --no-cache \
             --label GIT_COMMIT=$(git rev-parse HEAD) .
