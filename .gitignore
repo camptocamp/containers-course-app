@@ -1,2 +1,3 @@
 *.swp
 *~
+backend/python/__pycache__/
