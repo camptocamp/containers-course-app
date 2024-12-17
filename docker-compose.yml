@@ -2,7 +2,9 @@ version: '3'
 
 services:
   python-backend:
-    build: ./backend/python
+    build:
+      context: ./backend/python
+      dockerfile: Dockerfile.debug
     image: camptocamp/course_docker_backend:python
     volumes:
       - ./backend/python/:/usr/src/app/
